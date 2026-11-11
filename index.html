@@ -11,261 +11,387 @@
   :root{
     --bg:#fbf8f3; --card:#ffffff; --ink:#1f1f1f; --muted:#6a645c; --line:#e5ded3;
     --red:#b3261e; --red-soft:#fbe9e7; --gold:#f1bf00; --gold-soft:#fff6dc; --blue:#1d5fa8;
+    --ok:#1e7a46; --ok-soft:#e6f4ec;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --bg:#17150f; --card:#221f18; --ink:#f2eee6; --muted:#a8a092; --line:#3a352b;
       --red:#ff8a80; --red-soft:#3a1f1c; --gold:#f1bf00; --gold-soft:#332b10; --blue:#7fb2ee;
+      --ok:#5fd08e; --ok-soft:#12301f;
     }
-  }
-  :root[data-theme="dark"]{
-    --bg:#17150f; --card:#221f18; --ink:#f2eee6; --muted:#a8a092; --line:#3a352b;
-    --red:#ff8a80; --red-soft:#3a1f1c; --gold:#f1bf00; --gold-soft:#332b10; --blue:#7fb2ee;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html{background:var(--bg)}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.5;
-    padding:0 16px calc(32px + env(safe-area-inset-bottom))}
-  header{padding:calc(14px + env(safe-area-inset-top)) 0 8px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.5;padding:0 16px calc(40px + env(safe-area-inset-bottom))}
+  header{padding:calc(14px + env(safe-area-inset-top)) 0 6px}
   .flag{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-bottom:10px}
   .flag i{flex:1;background:var(--red)} .flag i:nth-child(2){flex:2;background:var(--gold)}
-  h1{font-size:22px;margin:0 0 2px}
+  h1{font-size:22px;margin:0 0 2px} h2{font-size:17px;margin:18px 0 6px}
   .sub{color:var(--muted);font-size:13px}
-  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;margin:0 -16px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--line)}
-  input[type=search]{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .nav{display:flex;gap:6px;margin:10px 0 4px}
+  .nav button{flex:1;padding:10px 4px;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px}
+  .nav button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 16px;margin:0 -16px;border-bottom:1px solid var(--line)}
+  input[type=search],input[type=date]{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
   .tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:7px 14px;font-size:14px}
   .tab[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
-  .opts{display:flex;align-items:center;gap:10px;margin:10px 0 4px;font-size:13px;color:var(--muted)}
+  .opts{display:flex;align-items:center;gap:10px;margin:10px 0 4px;font-size:13px;color:var(--muted);flex-wrap:wrap}
   .opts button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:13px}
   .opts button[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
-  .ja{font-size:14px;color:var(--muted)}
-  .es{font-size:20px;font-weight:700;margin:2px 0}
-  .kana{font-size:15px;color:var(--red)}
+  .ja{font-size:14px;color:var(--muted)} .es{font-size:20px;font-weight:700;margin:2px 0} .kana{font-size:15px;color:var(--red)}
   .row{display:flex;gap:8px;margin-top:10px}
-  .row button{flex:1;font-size:15px;padding:11px 6px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .row button{flex:1;font-size:14px;padding:11px 2px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
   .row .play{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .row .mic{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
   .row .fav[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
   .res{margin-top:8px;font-size:14px;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
   .res:empty{display:none}
-  .res.ok{background:#e6f4ec;border-color:#1e7a46;color:#14532d}
-  .res.near{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
-  .res.ng{background:var(--red-soft);border-color:var(--red);color:var(--ink)}
-  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .res.ok{background:#12301f;color:#bfe8cf}}
-  .row .mic{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
-  .row button{padding:11px 2px;font-size:14px}
-  .next{width:100%;margin:6px 0 0;font-size:16px;padding:12px;border-radius:10px;border:1px solid var(--red);background:var(--red);color:#fff;font-weight:700}
+  .res.ok{background:var(--ok-soft);border-color:var(--ok)} .res.near{background:var(--gold-soft);border-color:var(--gold)} .res.ng{background:var(--red-soft);border-color:var(--red)}
   .empty{color:var(--muted);text-align:center;padding:30px 0}
   .tip{background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:10px 12px;font-size:13px;margin:12px 0}
+  .big-btn{display:block;width:100%;padding:15px;font-size:18px;font-weight:700;border-radius:12px;border:none;background:var(--red);color:#fff;margin:10px 0}
+  .btn2{padding:10px 14px;font-size:15px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .count{display:flex;gap:10px;margin:10px 0}
+  .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+  .stat b{display:block;font-size:24px;color:var(--red)} .stat span{font-size:12px;color:var(--muted)}
+  .meter{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:6px 0}
+  .meter i{display:block;height:100%;background:var(--ok)}
+  details.wk{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;padding:0 12px}
+  details.wk summary{padding:12px 0;font-weight:700;cursor:pointer}
+  details.wk[open] summary{border-bottom:1px solid var(--line)}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:10px 0 6px}
+  .dbtn{padding:8px 0;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:12px;line-height:1.2}
+  .dbtn.done{background:var(--ok-soft);border-color:var(--ok)} .dbtn.today{border:2px solid var(--red)} .dbtn small{display:block;color:var(--muted);font-size:10px}
+  .q{font-size:20px;font-weight:700;margin:10px 0} .qsub{color:var(--muted);font-size:13px}
+  .choice{display:block;width:100%;text-align:left;font-size:17px;padding:14px;margin:8px 0;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+  .choice.right{border-color:var(--ok);background:var(--ok-soft)} .choice.wrong{border-color:var(--red);background:var(--red-soft)}
+  .fb{font-size:16px;font-weight:700;margin:10px 0}
+  .fb.ok{color:var(--ok)} .fb.ng{color:var(--red)}
+  .log{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+  .log summary{cursor:pointer}
+  .wr{padding:6px 0;border-top:1px solid var(--line);font-size:14px}
   #big{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
-  #big.on{display:flex}
-  #big .es{font-size:36px;margin:12px 0}
-  #big .ja{font-size:18px}
+  #big.on{display:flex} #big .es{font-size:36px;margin:12px 0} #big .ja{font-size:18px}
   #big button{margin-top:22px;font-size:18px;padding:14px 30px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
   #big .play{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
   .nov{display:none;color:var(--red);font-size:13px;margin:6px 0}
+  .hide{display:none}
 </style>
 </head>
 <body>
 <header>
   <div class="flag"><i></i><i></i><i></i></div>
   <h1>スペイン語 話せる帳</h1>
-  <div class="sub">▶ を押すとスペイン語で読み上げます ／ 夫婦で使える旅行会話</div>
+  <div class="sub">出発（2月20日）までの学習コース ＋ 会話集</div>
+  <div class="nav" id="nav">
+    <button data-v="learn">学習</button><button data-v="book">会話集</button><button data-v="log">ふりかえり</button>
+  </div>
 </header>
 
-<div class="bar">
-  <input type="search" id="q" placeholder="さがす（例：トイレ、会計、ありがとう）" autocomplete="off">
-  <div class="tabs" id="tabs"></div>
-</div>
+<main id="v-learn"></main>
 
-<div class="opts">
-  <button id="slow" aria-pressed="true">ゆっくり読む</button>
-  <button id="rand">🎲 ランダム練習</button>
-  <span id="count"></span>
-</div>
-<div class="nov" id="nov">この端末にスペイン語の音声が見つかりません。iPhoneの「設定 → アクセシビリティ → 読み上げコンテンツ → 声 → スペイン語」で音声を追加してください。</div>
-<div class="tip">📱 音が出ないときは、iPhone横のマナースイッチ（消音）をオフにして、音量を上げてください。「大きく見せる」で、お店の人に文字を見せることもできます。<br>🎤 「話す」を押してスペイン語で言うと、聞き取れた内容をお手本と比べて判定します（発音の点数ではなく「通じるか」の目安です）。初回はマイクの許可が必要です。</div>
+<main id="v-book" class="hide">
+  <div class="bar">
+    <input type="search" id="q" placeholder="さがす（例：トイレ、会計、ありがとう）" autocomplete="off">
+    <div class="tabs" id="tabs"></div>
+  </div>
+  <div class="opts"><button id="slow" aria-pressed="true">ゆっくり読む</button><span id="count"></span></div>
+  <div class="nov" id="nov">この端末にスペイン語の音声が見つかりません。iPhoneの「設定 → アクセシビリティ → 読み上げコンテンツ → 声 → スペイン語」で音声を追加してください。</div>
+  <div class="tip">📱 音が出ないときは、iPhone横のマナースイッチ（消音）をオフにして、音量を上げてください。<br>🎤 「話す」でスペイン語を言うと、聞き取れた内容をお手本と比べて判定します（発音の点数ではなく「通じるか」の目安）。</div>
+  <div id="list"></div>
+</main>
 
-<div id="list"></div>
+<main id="v-log" class="hide"></main>
+<main id="v-quiz" class="hide"></main>
 
 <div id="big" role="dialog" aria-modal="true">
-  <div class="ja" id="bigja"></div>
-  <div class="es" id="bigeo"></div>
-  <div class="kana" id="bigkana"></div>
-  <button class="play" id="bigplay">▶ 聞かせる</button>
-  <button id="bigclose">閉じる</button>
+  <div class="ja" id="bigja"></div><div class="es" id="bigeo"></div><div class="kana" id="bigkana"></div>
+  <button class="play" id="bigplay">▶ 聞かせる</button><button id="bigclose">閉じる</button>
 </div>
 
 <script>
+/* ===== データ：[日本語, スペイン語, 読み, 学習する週] ===== */
 const DATA = [
  {cat:"基本", items:[
-  ["こんにちは","Hola","オラ"],
-  ["おはよう（〜昼ごろ）","Buenos días","ブエノス ディアス"],
-  ["こんにちは（午後）","Buenas tardes","ブエナス タルデス"],
-  ["こんばんは","Buenas noches","ブエナス ノチェス"],
-  ["ありがとう","Gracias","グラシアス"],
-  ["どうもありがとう","Muchas gracias","ムチャス グラシアス"],
-  ["どういたしまして","De nada","デ ナダ"],
-  ["お願いします","Por favor","ポル ファボール"],
-  ["すみません（呼びかけ・ぶつかった時）","Perdón","ペルドン"],
-  ["ちょっと通ります","Con permiso","コン ペルミソ"],
-  ["はい／いいえ","Sí / No","シ ／ ノ"],
-  ["わかりません","No entiendo","ノ エンティエンド"],
-  ["英語を話せますか？","¿Habla inglés?","アブラ イングレス？"],
-  ["もっとゆっくりお願いします","Más despacio, por favor","マス デスパシオ ポル ファボール"],
-  ["もう一度お願いします","Otra vez, por favor","オトラ ベス ポル ファボール"],
-  ["さようなら／またね","Adiós / Hasta luego","アディオス ／ アスタ ルエゴ"],
-  ["日本人です","Soy japonés / Soy japonesa","ソイ ハポネス ／ ソイ ハポネサ"],
-  ["スペインは初めてです","Es mi primera vez en España","エス ミ プリメラ ベス エン エスパーニャ"]
+  ["こんにちは","Hola","オラ",1],
+  ["おはよう（〜昼ごろ）","Buenos días","ブエノス ディアス",1],
+  ["こんにちは（午後）","Buenas tardes","ブエナス タルデス",1],
+  ["こんばんは","Buenas noches","ブエナス ノチェス",1],
+  ["ありがとう","Gracias","グラシアス",1],
+  ["どうもありがとう","Muchas gracias","ムチャス グラシアス",1],
+  ["どういたしまして","De nada","デ ナダ",1],
+  ["お願いします","Por favor","ポル ファボール",1],
+  ["すみません（呼びかけ・ぶつかった時）","Perdón","ペルドン",1],
+  ["ちょっと通ります","Con permiso","コン ペルミソ",1],
+  ["はい／いいえ","Sí / No","シ ／ ノ",1],
+  ["さようなら／またね","Adiós / Hasta luego","アディオス ／ アスタ ルエゴ",1],
+  ["わかりません","No entiendo","ノ エンティエンド",2],
+  ["英語を話せますか？","¿Habla inglés?","アブラ イングレス？",2],
+  ["もっとゆっくりお願いします","Más despacio, por favor","マス デスパシオ ポル ファボール",2],
+  ["もう一度お願いします","Otra vez, por favor","オトラ ベス ポル ファボール",2],
+  ["日本人です","Soy japonés / Soy japonesa","ソイ ハポネス ／ ソイ ハポネサ",2],
+  ["スペインは初めてです","Es mi primera vez en España","エス ミ プリメラ ベス エン エスパーニャ",2]
  ]},
- {cat:"レストラン", items:[
-  ["2人です（席をお願いします）","Una mesa para dos, por favor","ウナ メサ パラ ドス ポル ファボール"],
-  ["メニューをお願いします","La carta, por favor","ラ カルタ ポル ファボール"],
-  ["おすすめは何ですか？","¿Qué recomienda?","ケ レコミエンダ"],
-  ["これをください","Quiero esto","キエロ エスト"],
-  ["これを2つください","Dos de esto, por favor","ドス デ エスト ポル ファボール"],
-  ["水（炭酸なし）をください","Agua sin gas, por favor","アグア シン ガス ポル ファボール"],
-  ["ビールをください","Una cerveza, por favor","ウナ セルベサ ポル ファボール"],
-  ["赤ワインをグラスで","Una copa de vino tinto","ウナ コパ デ ビノ ティント"],
-  ["白ワインをグラスで","Una copa de vino blanco","ウナ コパ デ ビノ ブランコ"],
-  ["コーヒー（ミルク入り）をください","Un café con leche, por favor","ウン カフェ コン レチェ ポル ファボール"],
-  ["とてもおいしいです","Está delicioso","エスタ デリシオソ"],
-  ["お会計をお願いします","La cuenta, por favor","ラ クエンタ ポル ファボール"],
-  ["カードで払えますか？","¿Puedo pagar con tarjeta?","プエド パガール コン タルヘタ"],
-  ["別々に払います","Por separado, por favor","ポル セパラード ポル ファボール"],
-  ["ナッツ類のアレルギーです","Soy alérgico a los frutos secos","ソイ アレルヒコ ア ロス フルートス セコス"],
-  ["（女性が言う）ナッツ類のアレルギーです","Soy alérgica a los frutos secos","ソイ アレルヒカ ア ロス フルートス セコス"],
-  ["トイレはどこですか？","¿Dónde están los aseos?","ドンデ エスタン ロス アセオス"]
- ]},
- {cat:"買い物", items:[
-  ["いくらですか？","¿Cuánto cuesta?","クアント クエスタ"],
-  ["見ているだけです","Solo estoy mirando","ソロ エストイ ミランド"],
-  ["これをください（買います）","Me lo llevo","メ ロ ジェボ"],
-  ["試着してもいいですか？","¿Puedo probármelo?","プエド プロバルメロ"],
-  ["もう少し大きいサイズはありますか？","¿Tiene una talla más grande?","ティエネ ウナ タジャ マス グランデ"],
-  ["もう少し小さいサイズはありますか？","¿Tiene una talla más pequeña?","ティエネ ウナ タジャ マス ペケーニャ"],
-  ["ちょっと高いです","Es un poco caro","エス ウン ポコ カロ"],
-  ["カードは使えますか？","¿Aceptan tarjeta?","アセプタン タルヘタ"],
-  ["袋をください","Una bolsa, por favor","ウナ ボルサ ポル ファボール"],
-  ["プレゼント用に包んでください","Para regalo, por favor","パラ レガロ ポル ファボール"]
- ]},
- {cat:"ホテル・移動", items:[
-  ["予約しています","Tengo una reserva","テンゴ ウナ レセルバ"],
-  ["荷物を預かってもらえますか？","¿Puede guardar mi equipaje?","プエデ グアルダル ミ エキパヘ"],
-  ["朝食は何時ですか？","¿A qué hora es el desayuno?","ア ケ オラ エス エル デサユノ"],
-  ["Wi-Fiのパスワードを教えてください","¿Cuál es la contraseña del wifi?","クアル エス ラ コントラセーニャ デル ウィフィ"],
-  ["部屋の鍵をお願いします","La llave de la habitación, por favor","ラ ジャベ デ ラ アビタシオン ポル ファボール"],
-  ["タクシーを呼んでください","¿Puede llamar un taxi?","プエデ ジャマール ウン タクシ"],
-  ["ここへお願いします（地図を見せて）","A este lugar, por favor","ア エステ ルガール ポル ファボール"],
-  ["駅はどこですか？","¿Dónde está la estación?","ドンデ エスタ ラ エスタシオン"],
-  ["どのくらいかかりますか？","¿Cuánto tarda?","クアント タルダ"],
-  ["ここで止めてください","Pare aquí, por favor","パレ アキ ポル ファボール"]
- ]},
- {cat:"観光", items:[
-  ["サグラダ・ファミリアはどこですか？","¿Dónde está la Sagrada Familia?","ドンデ エスタ ラ サグラダ ファミリア"],
-  ["何時に開きますか？","¿A qué hora abre?","ア ケ オラ アブレ"],
-  ["何時に閉まりますか？","¿A qué hora cierra?","ア ケ オラ シエラ"],
-  ["大人2枚ください","Dos entradas, por favor","ドス エントラーダス ポル ファボール"],
-  ["日本語の音声ガイドはありますか？","¿Hay audioguía en japonés?","アイ アウディオギア エン ハポネス"],
-  ["写真を撮ってもらえますか？","¿Puede sacarnos una foto?","プエデ サカルノス ウナ フォト"],
-  ["ここで写真を撮ってもいいですか？","¿Se pueden hacer fotos aquí?","セ プエデン アセール フォトス アキ"],
-  ["きれいですね！","¡Qué bonito!","ケ ボニート"],
-  ["集合は何時ですか？","¿A qué hora es el punto de encuentro?","ア ケ オラ エス エル プント デ エンクエントロ"]
- ]},
- {cat:"困った時", items:[
-  ["助けて！","¡Ayuda!","アユダ"],
-  ["医者が必要です","Necesito un médico","ネセシト ウン メディコ"],
-  ["ここが痛いです","Me duele aquí","メ ドゥエレ アキ"],
-  ["救急車を呼んでください","Llame a una ambulancia","ジャメ ア ウナ アンブランシア"],
-  ["警察を呼んでください","Llame a la policía","ジャメ ア ラ ポリシア"],
-  ["財布を盗まれました","Me han robado la cartera","メ アン ロバード ラ カルテラ"],
-  ["パスポートをなくしました","He perdido mi pasaporte","エ ペルディード ミ パサポルテ"],
-  ["道に迷いました","Estoy perdido","エストイ ペルディード"],
-  ["（女性が言う）道に迷いました","Estoy perdida","エストイ ペルディーダ"],
-  ["日本語を話せる人はいますか？","¿Hay alguien que hable japonés?","アイ アルギエン ケ アブレ ハポネス"],
-  ["薬局はどこですか？","¿Dónde hay una farmacia?","ドンデ アイ ウナ ファルマシア"]
+ {cat:"会話", items:[
+  ["はじめまして／よろしく","Mucho gusto","ムチョ グスト",2],
+  ["お元気ですか？","¿Cómo está?","コモ エスタ",2],
+  ["元気です、ありがとう","Muy bien, gracias","ムイ ビエン グラシアス",2],
+  ["スペイン語は少し話せます","Hablo un poco de español","アブロ ウン ポコ デ エスパニョル",2],
+  ["スペイン語は話せません","No hablo español","ノ アブロ エスパニョル",2],
+  ["スペイン語で何と言いますか？","¿Cómo se dice en español?","コモ セ ディセ エン エスパニョル",2],
+  ["どこから来ましたか？","¿De dónde es?","デ ドンデ エス",13],
+  ["日本から来ました","Soy de Japón","ソイ デ ハポン",13],
+  ["休暇で来ています","Estoy de vacaciones","エストイ デ バカシオネス",13],
+  ["妻と来ています","Estoy aquí con mi esposa","エストイ アキ コン ミ エスポサ",13],
+  ["こちらは妻です","Esta es mi esposa","エスタ エス ミ エスポサ",13],
+  ["（妻が言う）夫と来ています","Estoy aquí con mi marido","エストイ アキ コン ミ マリード",13],
+  ["あなたは？","¿Y usted?","イ ウステ",13],
+  ["お会いできてうれしい","Encantado / Encantada","エンカンタード ／ エンカンターダ",13],
+  ["いろいろありがとうございました","Muchas gracias por todo","ムチャス グラシアス ポル トド",14],
+  ["また明日","Hasta mañana","アスタ マニャーナ",14]
  ]},
  {cat:"数字", items:[
-  ["1","uno","ウノ"],["2","dos","ドス"],["3","tres","トレス"],["4","cuatro","クアトロ"],["5","cinco","シンコ"],
-  ["6","seis","セイス"],["7","siete","シエテ"],["8","ocho","オチョ"],["9","nueve","ヌエベ"],["10","diez","ディエス"],
-  ["20","veinte","ベインテ"],["50","cincuenta","シンクエンタ"],["100","cien","シエン"]
+  ["1","uno","ウノ",3],["2","dos","ドス",3],["3","tres","トレス",3],["4","cuatro","クアトロ",3],["5","cinco","シンコ",3],
+  ["6","seis","セイス",3],["7","siete","シエテ",3],["8","ocho","オチョ",3],["9","nueve","ヌエベ",3],["10","diez","ディエス",3],
+  ["20","veinte","ベインテ",3],["50","cincuenta","シンクエンタ",3],["100","cien","シエン",3]
+ ]},
+ {cat:"お金", items:[
+  ["1ユーロ","un euro","ウン エウロ",3],
+  ["5ユーロ","cinco euros","シンコ エウロス",3],
+  ["10ユーロ","diez euros","ディエス エウロス",3],
+  ["20ユーロ","veinte euros","ベインテ エウロス",3],
+  ["合計でいくらですか？","¿Cuánto es en total?","クアント エス エン トタル",3],
+  ["おつりは取っておいてください（チップ）","Quédese con el cambio","ケデセ コン エル カンビオ",3]
+ ]},
+ {cat:"レストラン", items:[
+  ["2人です（席をお願いします）","Una mesa para dos, por favor","ウナ メサ パラ ドス ポル ファボール",4],
+  ["メニューをお願いします","La carta, por favor","ラ カルタ ポル ファボール",4],
+  ["おすすめは何ですか？","¿Qué recomienda?","ケ レコミエンダ",4],
+  ["これをください","Quiero esto","キエロ エスト",4],
+  ["これを2つください","Dos de esto, por favor","ドス デ エスト ポル ファボール",4],
+  ["水（炭酸なし）をください","Agua sin gas, por favor","アグア シン ガス ポル ファボール",4],
+  ["ビールをください","Una cerveza, por favor","ウナ セルベサ ポル ファボール",4],
+  ["小さめの生ビールをください","Una caña, por favor","ウナ カーニャ ポル ファボール",4],
+  ["赤ワインをグラスで","Una copa de vino tinto","ウナ コパ デ ビノ ティント",4],
+  ["白ワインをグラスで","Una copa de vino blanco","ウナ コパ デ ビノ ブランコ",4],
+  ["コーヒー（ミルク入り）をください","Un café con leche, por favor","ウン カフェ コン レチェ ポル ファボール",4],
+  ["パエリアを2人分ください","Una paella para dos, por favor","ウナ パエジャ パラ ドス ポル ファボール",4],
+  ["生ハムをください","Jamón ibérico, por favor","ハモン イベリコ ポル ファボール",4],
+  ["ポテトのピリ辛ソース（パタタス・ブラバス）をください","Patatas bravas, por favor","パタタス ブラバス ポル ファボール",4],
+  ["とてもおいしいです","Está delicioso","エスタ デリシオソ",5],
+  ["お会計をお願いします","La cuenta, por favor","ラ クエンタ ポル ファボール",5],
+  ["カードで払えますか？","¿Puedo pagar con tarjeta?","プエド パガール コン タルヘタ",5],
+  ["別々に払います","Por separado, por favor","ポル セパラード ポル ファボール",5],
+  ["同じものをもう一つお願いします","Otro igual, por favor","オトロ イグアル ポル ファボール",5],
+  ["お腹がいっぱいです","Estoy lleno","エストイ ジェノ",5],
+  ["（女性が言う）お腹がいっぱいです","Estoy llena","エストイ ジェナ",5],
+  ["お肉なしでお願いします","Sin carne, por favor","シン カルネ ポル ファボール",5],
+  ["持ち帰りにできますか？","¿Puedo llevármelo?","プエド ジェバルメロ",5],
+  ["ナッツ類のアレルギーです","Soy alérgico a los frutos secos","ソイ アレルヒコ ア ロス フルートス セコス",5],
+  ["（女性が言う）ナッツ類のアレルギーです","Soy alérgica a los frutos secos","ソイ アレルヒカ ア ロス フルートス セコス",5],
+  ["トイレはどこですか？","¿Dónde están los aseos?","ドンデ エスタン ロス アセオス",5],
+  ["乾杯！","¡Salud!","サルー",14],
+  ["召し上がれ（いただきます）","¡Que aproveche!","ケ アプロベチェ",14]
+ ]},
+ {cat:"買い物", items:[
+  ["いくらですか？","¿Cuánto cuesta?","クアント クエスタ",6],
+  ["見ているだけです","Solo estoy mirando","ソロ エストイ ミランド",6],
+  ["これをください（買います）","Me lo llevo","メ ロ ジェボ",6],
+  ["試着してもいいですか？","¿Puedo probármelo?","プエド プロバルメロ",6],
+  ["もう少し大きいサイズはありますか？","¿Tiene una talla más grande?","ティエネ ウナ タジャ マス グランデ",6],
+  ["もう少し小さいサイズはありますか？","¿Tiene una talla más pequeña?","ティエネ ウナ タジャ マス ペケーニャ",6],
+  ["ちょっと高いです","Es un poco caro","エス ウン ポコ カロ",6],
+  ["カードは使えますか？","¿Aceptan tarjeta?","アセプタン タルヘタ",6],
+  ["袋をください","Una bolsa, por favor","ウナ ボルサ ポル ファボール",6],
+  ["プレゼント用に包んでください","Para regalo, por favor","パラ レガロ ポル ファボール",6]
+ ]},
+ {cat:"ホテル・移動", items:[
+  ["予約しています","Tengo una reserva","テンゴ ウナ レセルバ",7],
+  ["荷物を預かってもらえますか？","¿Puede guardar mi equipaje?","プエデ グアルダル ミ エキパヘ",7],
+  ["朝食は何時ですか？","¿A qué hora es el desayuno?","ア ケ オラ エス エル デサユノ",7],
+  ["Wi-Fiのパスワードを教えてください","¿Cuál es la contraseña del wifi?","クアル エス ラ コントラセーニャ デル ウィフィ",7],
+  ["部屋の鍵をお願いします","La llave de la habitación, por favor","ラ ジャベ デ ラ アビタシオン ポル ファボール",7],
+  ["お湯が出ません","No hay agua caliente","ノ アイ アグア カリエンテ",7],
+  ["エアコンが動きません","El aire acondicionado no funciona","エル アイレ アコンディシオナード ノ フンシオナ",7],
+  ["タオルをもう1枚お願いします","Una toalla más, por favor","ウナ トアジャ マス ポル ファボール",7],
+  ["7時にモーニングコールをお願いします","Despiértenos a las siete, por favor","デスピエルテノス ア ラス シエテ ポル ファボール",7],
+  ["チェックアウトをお願いします","El check-out, por favor","エル チェカウト ポル ファボール",7],
+  ["タクシーを呼んでください","¿Puede llamar un taxi?","プエデ ジャマール ウン タクシ",8],
+  ["ここへお願いします（地図を見せて）","A este lugar, por favor","ア エステ ルガール ポル ファボール",8],
+  ["駅はどこですか？","¿Dónde está la estación?","ドンデ エスタ ラ エスタシオン",8],
+  ["どのくらいかかりますか？","¿Cuánto tarda?","クアント タルダ",8],
+  ["ここで止めてください","Pare aquí, por favor","パレ アキ ポル ファボール",8],
+  ["地下鉄はどこですか？","¿Dónde está el metro?","ドンデ エスタ エル メトロ",8],
+  ["バルセロナまで切符を1枚ください","Un billete para Barcelona, por favor","ウン ビジェテ パラ バルセロナ ポル ファボール",8],
+  ["何番ホームから出ますか？","¿De qué andén sale?","デ ケ アンデン サレ",8],
+  ["遠いですか？","¿Está lejos?","エスタ レホス",8],
+  ["まっすぐ","Todo recto","トド レクト",9],
+  ["右","A la derecha","ア ラ デレチャ",9],
+  ["左","A la izquierda","ア ラ イスキエルダ",9]
+ ]},
+ {cat:"観光", items:[
+  ["サグラダ・ファミリアはどこですか？","¿Dónde está la Sagrada Familia?","ドンデ エスタ ラ サグラダ ファミリア",9],
+  ["何時に開きますか？","¿A qué hora abre?","ア ケ オラ アブレ",9],
+  ["何時に閉まりますか？","¿A qué hora cierra?","ア ケ オラ シエラ",9],
+  ["大人2枚ください","Dos entradas, por favor","ドス エントラーダス ポル ファボール",9],
+  ["日本語の音声ガイドはありますか？","¿Hay audioguía en japonés?","アイ アウディオギア エン ハポネス",9],
+  ["写真を撮ってもらえますか？","¿Puede sacarnos una foto?","プエデ サカルノス ウナ フォト",9],
+  ["ここで写真を撮ってもいいですか？","¿Se pueden hacer fotos aquí?","セ プエデン アセール フォトス アキ",9],
+  ["きれいですね！","¡Qué bonito!","ケ ボニート",9],
+  ["集合は何時ですか？","¿A qué hora es el punto de encuentro?","ア ケ オラ エス エル プント デ エンクエントロ",9]
+ ]},
+ {cat:"気持ち", items:[
+  ["お腹がすきました","Tengo hambre","テンゴ アンブレ",10],
+  ["のどが渇きました","Tengo sed","テンゴ セド",10],
+  ["寒いです","Tengo frío","テンゴ フリオ",10],
+  ["暑いです","Tengo calor","テンゴ カロル",10],
+  ["疲れました","Estoy cansado","エストイ カンサード",10],
+  ["（女性が言う）疲れました","Estoy cansada","エストイ カンサーダ",10],
+  ["気分が悪いです","Me siento mal","メ シエント マル",10],
+  ["すばらしい！","¡Es impresionante!","エス インプレシオナンテ",10],
+  ["大好きです","Me encanta","メ エンカンタ",10],
+  ["ちょっと休みたいです","Quiero descansar un poco","キエロ デスカンサール ウン ポコ",10]
+ ]},
+ {cat:"困った時", items:[
+  ["助けて！","¡Ayuda!","アユダ",11],
+  ["医者が必要です","Necesito un médico","ネセシト ウン メディコ",11],
+  ["ここが痛いです","Me duele aquí","メ ドゥエレ アキ",11],
+  ["救急車を呼んでください","Llame a una ambulancia","ジャメ ア ウナ アンブランシア",11],
+  ["警察を呼んでください","Llame a la policía","ジャメ ア ラ ポリシア",11],
+  ["財布を盗まれました","Me han robado la cartera","メ アン ロバード ラ カルテラ",11],
+  ["パスポートをなくしました","He perdido mi pasaporte","エ ペルディード ミ パサポルテ",11],
+  ["道に迷いました","Estoy perdido","エストイ ペルディード",11],
+  ["（女性が言う）道に迷いました","Estoy perdida","エストイ ペルディーダ",11],
+  ["日本語を話せる人はいますか？","¿Hay alguien que hable japonés?","アイ アルギエン ケ アブレ ハポネス",11],
+  ["薬局はどこですか？","¿Dónde hay una farmacia?","ドンデ アイ ウナ ファルマシア",11]
+ ]},
+ {cat:"時間", items:[
+  ["今何時ですか？","¿Qué hora es?","ケ オラ エス",12],
+  ["3時です","Son las tres","ソン ラス トレス",12],
+  ["8時です（時刻を答える）","A las ocho","ア ラス オチョ",12],
+  ["今日","Hoy","オイ",12],
+  ["明日","Mañana","マニャーナ",12],
+  ["今","Ahora","アオラ",12],
+  ["何時に出発しますか？","¿A qué hora sale?","ア ケ オラ サレ",12],
+  ["何時に着きますか？","¿A qué hora llega?","ア ケ オラ ジェガ",12],
+  ["少し待ってください","Espere un momento, por favor","エスペレ ウン モメント ポル ファボール",12]
  ]}
 ];
 
-const FAV_KEY="spain-favs-v1";
-let favs=new Set(); try{favs=new Set(JSON.parse(localStorage.getItem(FAV_KEY)||"[]"))}catch(e){}
-function saveFavs(){try{localStorage.setItem(FAV_KEY,JSON.stringify([...favs]))}catch(e){}}
+const WEEK_INFO = {
+ 1:{t:"あいさつの基本",tip:"まずは声に出すこと。スペイン語はほぼローマ字読みで、hは読みません（Hola＝オラ）。"},
+ 2:{t:"伝わらない時・自己紹介",tip:"「No entiendo（わかりません）」「Más despacio（ゆっくり）」が最強の2語。困ったらまずこれ。"},
+ 3:{t:"数字とお金",tip:"1〜10を完璧に。値段は「数字＋euros」。チップは「Quédese con el cambio」。"},
+ 4:{t:"レストラン①注文",tip:"「〜をください」は「Quiero 〜」か「〜, por favor」。por favorを付ければ失礼になりません。"},
+ 5:{t:"レストラン②食事中・会計",tip:"女性は語尾が -a になります（lleno→llena、cansado→cansada）。"},
+ 6:{t:"買い物",tip:"「¿Cuánto cuesta?」は商品を指さしながら言えばOK。"},
+ 7:{t:"ホテル",tip:"「Tengo una reserva」だけでチェックインが始まります。"},
+ 8:{t:"移動（タクシー・電車）",tip:"スマホの地図を見せて「A este lugar, por favor」が最強です。"},
+ 9:{t:"道案内・観光",tip:"「¿Dónde está 〜?」は〜に場所を入れるだけで何にでも使えます。"},
+ 10:{t:"体調・気持ち",tip:"「Tengo 〜」は体の状態を言う形（hambre＝空腹、sed＝のどの渇き、frío＝寒さ）。"},
+ 11:{t:"困った時",tip:"緊急時は短く大きな声で：¡Ayuda! / Necesito un médico。"},
+ 12:{t:"時間・日付",tip:"時刻は「Son las 〜」。1時だけ「Es la una」になります。"},
+ 13:{t:"会話を続ける",tip:"「¿Y usted?（あなたは？）」を付けると会話が続きます。"},
+ 14:{t:"総仕上げ",tip:"新しいフレーズは少なめ。毎日の復習で、旅行当日に使う言葉を声に出して。"}
+};
 
-const tabsEl=document.getElementById("tabs"), listEl=document.getElementById("list"), qEl=document.getElementById("q"), countEl=document.getElementById("count");
-let cur="基本", slow=true;
-const cats=["★お気に入り",...DATA.map(d=>d.cat)];
-cats.forEach(c=>{const b=document.createElement("button");b.className="tab";b.textContent=c;b.onclick=()=>{cur=c;qEl.value="";render()};tabsEl.appendChild(b)});
+const ITEMS = [];
+DATA.forEach(d=>d.items.forEach(a=>ITEMS.push({cat:d.cat,ja:a[0],es:a[1],kana:a[2],w:a[3]})));
+const TOTAL_DAYS = 98;
+const DEPART = "2027-02-20";
 
-let voice=null;
+function dayInfo(day){return {w:Math.floor((day-1)/7)+1,d:(day-1)%7}}
+function weekItems(w){return ITEMS.filter(i=>i.w===w)}
+function learnedUpTo(w){return ITEMS.filter(i=>i.w&&i.w<=w)}
+function lessonNew(day){
+  const {w,d}=dayInfo(day); if(d===6)return [];
+  const arr=weekItems(w); if(!arr.length)return [];
+  const per=Math.ceil(arr.length/6); return arr.slice(d*per,(d+1)*per);
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function stripF(s){return s.replace("（女性が言う）","").replace("（妻が言う）","")}
+function makeQ(it,type,pool){
+  const useJa=(type==="listen"||type==="rev");
+  const key=useJa?"ja":"es";
+  const others=shuffle(pool.filter(o=>o.es!==it.es&&stripF(o.ja)!==stripF(it.ja)&&o[key]!==it[key]));
+  const wrong=[];const seen=new Set([it[key]]);
+  for(const o of others){if(!seen.has(o[key])){seen.add(o[key]);wrong.push(o)}if(wrong.length===3)break}
+  const choices=shuffle([it,...wrong]);
+  return {type,it,choices,ans:choices.indexOf(it),key};
+}
+function buildQuiz(day,miss){
+  const {w,d}=dayInfo(day);const news=lessonNew(day);const pool=learnedUpTo(w);
+  const qs=[];const add=(it,t)=>qs.push(makeQ(it,t,pool));
+  if(news.length){
+    news.forEach(it=>{add(it,"listen");add(it,"read")});
+    const prev=shuffle(pool.filter(i=>!news.includes(i))).sort((a,b)=>((miss&&miss[b.es])||0)-((miss&&miss[a.es])||0));
+    prev.slice(0,Math.max(0,10-qs.length)).forEach((it,i)=>add(it,i%2?"listen":"read"));
+  }else{
+    const wk=shuffle(weekItems(w)).slice(0,10);
+    const rest=shuffle(pool.filter(i=>i.w!==w)).slice(0,6);
+    wk.concat(rest).forEach((it,i)=>add(it,["listen","read","rev"][i%3]));
+    if(!qs.length)pool.slice(0,10).forEach((it,i)=>add(it,["listen","read","rev"][i%3]));
+  }
+  return shuffle(qs).slice(0,14);
+}
+function buildMissQuiz(miss){
+  const list=ITEMS.filter(i=>(miss[i.es]||0)>0).sort((a,b)=>miss[b.es]-miss[a.es]).slice(0,10);
+  const pool=ITEMS.filter(i=>i.w);
+  return shuffle(list.map((it,i)=>makeQ(it,["listen","read","rev"][i%3],pool)));
+}
+function isoToday(){const t=new Date();return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")}
+function daysBetween(a,b){return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/86400000)}
+function addDays(iso,n){const t=new Date(iso+"T00:00:00");t.setDate(t.getDate()+n);return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")}
+
+/* ===== 画面・保存・音 ===== */
+const $=s=>document.querySelector(s);
+const el=h=>{const d=document.createElement("div");d.innerHTML=h.trim();return d.firstChild};
+const fmt=iso=>{const p=iso.split("-");return (+p[1])+"/"+(+p[2])};
+const KEY="spain-progress-v2";
+let P={start:isoToday(),log:[],miss:{},favs:[]};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)P=Object.assign(P,s)}catch(e){}
+try{if(!localStorage.getItem(KEY)){const o=JSON.parse(localStorage.getItem("spain-favs-v1")||"[]");if(Array.isArray(o))P.favs=o}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}}
+save();
+
+let voice=null,slow=true;
 function pickVoice(){
-  if(!("speechSynthesis" in window)) return;
+  if(!("speechSynthesis" in window))return;
   const vs=speechSynthesis.getVoices();
   voice=vs.find(v=>v.lang==="es-ES")||vs.find(v=>v.lang&&v.lang.toLowerCase().startsWith("es"))||null;
-  document.getElementById("nov").style.display=(vs.length&&!voice)?"block":"none";
+  $("#nov").style.display=(vs.length&&!voice)?"block":"none";
 }
 if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
 function speak(text){
   if(!("speechSynthesis" in window)){alert("この端末では読み上げが使えません");return}
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang="es-ES"; if(voice)u.voice=voice;
-  u.rate=slow?0.8:1.0;
+  const u=new SpeechSynthesisUtterance(text.replace(/ \/ /g,", "));
+  u.lang="es-ES";if(voice)u.voice=voice;u.rate=slow?0.8:1.0;
   speechSynthesis.speak(u);
 }
-document.getElementById("slow").onclick=e=>{slow=!slow;e.currentTarget.setAttribute("aria-pressed",slow)};
-
-const big=document.getElementById("big");
-function showBig(it){
-  document.getElementById("bigja").textContent=it[0];
-  document.getElementById("bigeo").textContent=it[1];
-  document.getElementById("bigkana").textContent=it[2];
-  document.getElementById("bigplay").onclick=()=>speak(it[1]);
-  big.classList.add("on");
+let AC=null;
+function ac(){
+  if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(C)AC=new C()}
+  if(AC&&AC.state==="suspended")AC.resume();
+  return AC;
 }
-document.getElementById("bigclose").onclick=()=>big.classList.remove("on");
-
-function all(){return DATA.flatMap(d=>d.items.map(i=>({cat:d.cat,it:i})))}
-function render(){
-  [...tabsEl.children].forEach((b,i)=>b.setAttribute("aria-pressed",cats[i]===cur&&!qEl.value));
-  const q=qEl.value.trim().toLowerCase();
-  let rows;
-  if(q){rows=all().filter(r=>(r.it[0]+r.it[1]+r.it[2]).toLowerCase().includes(q))}
-  else if(cur==="練習"){rows=practiceItem?[{cat:"",it:practiceItem}]:[]}
-  else if(cur==="★お気に入り"){rows=all().filter(r=>favs.has(r.it[1]))}
-  else{rows=all().filter(r=>r.cat===cur)}
-  listEl.innerHTML="";
-  countEl.textContent=rows.length+"件";
-  if(!rows.length){const d=document.createElement("div");d.className="empty";d.textContent=cur==="★お気に入り"&&!q?"★を押すと、ここに集まります":"見つかりませんでした";listEl.appendChild(d);return}
-  rows.forEach(({it})=>{
-    const c=document.createElement("div");c.className="card";
-    c.innerHTML='<div class="ja"></div><div class="es"></div><div class="kana"></div><div class="row"><button class="play">▶ 聞く</button><button class="mic">🎤 話す</button><button class="show">大きく</button><button class="fav" aria-label="お気に入り">★</button></div><div class="res"></div>';
-    c.querySelector(".ja").textContent=it[0];
-    const esEl=c.querySelector(".es"), kanaEl=c.querySelector(".kana");
-    const isP=cur==="練習"&&!q;
-    if(isP){esEl.textContent="？？？（スペイン語で言ってみよう）";kanaEl.textContent=""}
-    else{esEl.textContent=it[1];kanaEl.textContent="読み：" + it[2]}
-    c.querySelector(".mic").onclick=()=>listen(it[1],c.querySelector(".res"),()=>{esEl.textContent=it[1];kanaEl.textContent="読み：" + it[2]});
-    c.querySelector(".play").onclick=()=>speak(it[1]);
-    c.querySelector(".show").onclick=()=>showBig(it);
-    const f=c.querySelector(".fav");f.setAttribute("aria-pressed",favs.has(it[1]));
-    f.onclick=()=>{favs.has(it[1])?favs.delete(it[1]):favs.add(it[1]);saveFavs();f.setAttribute("aria-pressed",favs.has(it[1]));if(cur==="★お気に入り"&&!qEl.value)render()};
-    listEl.appendChild(c);
-  });
-  if(cur==="練習"&&!q){const n=document.createElement("button");n.className="next";n.textContent="🎲 次の問題";n.onclick=newPractice;listEl.appendChild(n)}
+function tone(f,t0,dur,type,vol){
+  const a=ac();if(!a)return;
+  const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;
+  const t=a.currentTime+t0;
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+0.05);
 }
+function sfx(ok){
+  if(ok){tone(784,0,0.14,"sine",0.35);tone(1175,0.12,0.32,"sine",0.35)}
+  else{tone(220,0,0.18,"sawtooth",0.2);tone(165,0.16,0.34,"sawtooth",0.2)}
+}
+function fanfare(){[523,659,784,1047].forEach((f,i)=>tone(f,i*0.13,0.3,"triangle",0.35))}
 
-/* ---- 話して判定 ---- */
-let practiceItem=null;
-function newPractice(){const a=all();practiceItem=a[Math.floor(Math.random()*a.length)].it;cur="練習";qEl.value="";render()}
-document.getElementById("rand").onclick=newPractice;
+/* ===== 話して判定 ===== */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 const NUMW={0:"cero",1:"uno",2:"dos",3:"tres",4:"cuatro",5:"cinco",6:"seis",7:"siete",8:"ocho",9:"nueve",10:"diez",20:"veinte",50:"cincuenta",100:"cien"};
 function norm(s){
@@ -285,11 +411,10 @@ function listen(target,res,done){
   if(standalone){res.className="res ng";res.textContent="ホーム画面から開いたアプリ型では、iPhoneの仕様でマイク判定が使えません。Safariでこのページのアドレスを直接開いてください（読み上げ ▶ はこのままでOK）。";return}
   if(!SR){res.className="res ng";res.textContent="この端末（ブラウザ）では音声認識が使えません。iPhoneのSafariで開いてください。";return}
   try{speechSynthesis.cancel()}catch(e){}
-  // 「/」で2通り書いてある文は、どちらを言っても正解にする
   const targets=target.split(" / ").map(norm);
   if(window.__rec){try{window.__rec.abort()}catch(e){}window.__rec=null}
   const r=new SR();window.__rec=r;r.lang="es-ES";r.continuous=false;r.interimResults=true;r.maxAlternatives=3;
-  res.className="res near";res.textContent="🎤 聞いています…スペイン語でどうぞ（もう一度「話す」を押すと中止）";
+  res.className="res near";res.textContent="🎤 聞いています…スペイン語でどうぞ";
   let got=false,failed=false,started=false,live="";
   const timer=setTimeout(()=>{try{r.stop()}catch(e){}},9000);
   r.onstart=()=>{started=true};
@@ -299,16 +424,15 @@ function listen(target,res,done){
     let best=0,heard=alts[0]||"";
     alts.forEach(t=>targets.forEach(g=>{const s=sim(norm(t),g);if(s>best){best=s;heard=t}}));
     const pct=Math.round(best*100);
-    if(best>=0.85){res.className="res ok";res.textContent="◎ 通じます！（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
+    if(best>=0.85){res.className="res ok";res.textContent="◎ 通じます！（一致 "+pct+"%）　聞き取り：「"+heard+"」";sfx(true)}
     else if(best>=0.6){res.className="res near";res.textContent="○ おしい！もう一度（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
-    else{res.className="res ng";res.textContent="△ もう一度、ゆっくり（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
+    else{res.className="res ng";res.textContent="△ もう一度、ゆっくり（一致 "+pct+"%）　聞き取り：「"+heard+"」";sfx(false)}
     if(done)done();
   };
   r.onresult=e=>{
-    const first=e.results[e.results.length-1];
-    live=first[0].transcript;
-    if(!first.isFinal){res.className="res near";res.textContent="🎤 聞き取り中：「"+live+"」";return}
-    got=true;judge([...first].map(a=>a.transcript));
+    const last=e.results[e.results.length-1];live=last[0].transcript;
+    if(!last.isFinal){res.className="res near";res.textContent="🎤 聞き取り中：「"+live+"」";return}
+    got=true;judge([...last].map(a=>a.transcript));
   };
   r.onerror=e=>{
     failed=true;res.className="res ng";
@@ -318,14 +442,214 @@ function listen(target,res,done){
   r.onend=()=>{
     clearTimeout(timer);
     if(!got&&!failed){
-      if(live){judge([live])}
+      if(live)judge([live]);
       else{res.className="res ng";res.textContent=started?"声が認識されませんでした（マイクは動いていました）。もう少し近づいて、ゆっくり言ってみてください。":"音声認識が始まりませんでした。設定→一般→キーボード→音声入力 と Siri がオンか確認してください。"}
     }
   };
   try{r.start()}catch(err){res.className="res ng";res.textContent="マイクを開始できませんでした。（"+err.name+"）"}
 }
-qEl.addEventListener("input",render);
-render();
+
+/* ===== フレーズのカード ===== */
+const big=$("#big");
+function showBig(it){
+  $("#bigja").textContent=it.ja;$("#bigeo").textContent=it.es;$("#bigkana").textContent=it.kana;
+  $("#bigplay").onclick=()=>speak(it.es);big.classList.add("on");
+}
+$("#bigclose").onclick=()=>big.classList.remove("on");
+function makeCard(it,onFavChange){
+  const c=el('<div class="card"><div class="ja"></div><div class="es"></div><div class="kana"></div><div class="row"><button class="play">▶ 聞く</button><button class="mic">🎤 話す</button><button class="show">大きく</button><button class="fav" aria-label="お気に入り">★</button></div><div class="res"></div></div>');
+  c.querySelector(".ja").textContent=it.ja;c.querySelector(".es").textContent=it.es;c.querySelector(".kana").textContent="読み："+it.kana;
+  c.querySelector(".play").onclick=()=>speak(it.es);
+  c.querySelector(".mic").onclick=()=>listen(it.es,c.querySelector(".res"));
+  c.querySelector(".show").onclick=()=>showBig(it);
+  const f=c.querySelector(".fav");f.setAttribute("aria-pressed",P.favs.includes(it.es));
+  f.onclick=()=>{const i=P.favs.indexOf(it.es);if(i>=0)P.favs.splice(i,1);else P.favs.push(it.es);save();f.setAttribute("aria-pressed",P.favs.includes(it.es));if(onFavChange)onFavChange()};
+  return c;
+}
+
+/* ===== 画面の切り替え ===== */
+let view="learn";
+function setView(v){
+  view=v;
+  ["learn","book","log","quiz"].forEach(n=>$("#v-"+n).classList.toggle("hide",n!==v));
+  [...$("#nav").children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));
+  if(v==="learn")renderLearn();if(v==="book")renderBook();if(v==="log")renderLog();
+  window.scrollTo(0,0);
+}
+[...$("#nav").children].forEach(b=>b.onclick=()=>{ac();setView(b.dataset.v)});
+
+/* ===== 学習ホーム ===== */
+function todayDay(){return Math.min(TOTAL_DAYS,Math.max(1,daysBetween(P.start,isoToday())+1))}
+function sessionsOf(day){return P.log.filter(l=>l.day===day)}
+function bestPct(day){const L=sessionsOf(day);return L.length?Math.max(...L.map(l=>Math.round(l.score/l.total*100))):null}
+function renderLearn(){
+  const root=$("#v-learn");root.innerHTML="";
+  const td=todayDay(),left=daysBetween(isoToday(),DEPART);
+  const doneSet=new Set(P.log.filter(l=>l.day>0).map(l=>l.day));
+  const behind=[];for(let d=1;d<td;d++)if(!doneSet.has(d))behind.push(d);
+  const {w,d:dd}=dayInfo(td);
+  root.appendChild(el('<div class="count"><div class="stat"><b>'+Math.max(0,left)+'</b><span>出発まで（日）</span></div><div class="stat"><b>'+doneSet.size+'<small style="font-size:13px">/'+TOTAL_DAYS+'</small></b><span>完了した日</span></div><div class="stat"><b>'+td+'</b><span>今日は Day</span></div></div>'));
+  root.appendChild(el('<div class="meter"><i style="width:'+Math.round(doneSet.size/TOTAL_DAYS*100)+'%"></i></div>'));
+  const news=lessonNew(td);const b=bestPct(td);
+  const card=el('<div class="card"><div class="ja">第'+w+'週「'+WEEK_INFO[w].t+'」　Day '+td+'（'+fmt(P.start===isoToday()?P.start:addDays(P.start,td-1))+'）</div><div class="es" style="font-size:18px">'+(dd===6?"今週の復習の日":"今日の新しいフレーズ："+news.length+"個")+'</div><div class="kana" style="font-size:13px">'+news.map(i=>i.es).join("　／　")+'</div></div>');
+  const sb=el('<button class="big-btn">▶ 今日のレッスンを始める</button>');sb.onclick=()=>{ac();startLesson(td)};
+  card.appendChild(sb);
+  if(b!==null)card.appendChild(el('<div class="sub">✓ 今日は完了済み（最高 '+b+'%）。もう一度やっても記録が増えます。</div>'));
+  root.appendChild(card);
+  if(behind.length){
+    const nb=el('<div class="tip">未完了の日が '+behind.length+' 日分あります（Day '+behind.slice(0,6).join("、")+(behind.length>6?"…":"")+'）。無理せず、少しずつ追いつけば大丈夫です。<br></div>');
+    const bb=el('<button class="btn2" style="margin-top:8px">いちばん古い未完了（Day '+behind[0]+'）をやる</button>');bb.onclick=()=>{ac();startLesson(behind[0])};
+    nb.appendChild(bb);root.appendChild(nb);
+  }
+  root.appendChild(el('<h2>14週間のコース</h2>'));
+  for(let wk=1;wk<=14;wk++){
+    const base=(wk-1)*7;const k=[1,2,3,4,5,6,7].filter(i=>doneSet.has(base+i)).length;
+    const det=el('<details class="wk"><summary>第'+wk+'週　'+WEEK_INFO[wk].t+'　<span class="sub">'+fmt(addDays(P.start,base))+'〜　✓'+k+'/7</span></summary><div class="sub" style="margin:8px 0">💡 '+WEEK_INFO[wk].tip+'（この週のフレーズ '+weekItems(wk).length+' 個）</div></details>');
+    if(wk===w)det.open=true;
+    const grid=el('<div class="days"></div>');
+    for(let i=1;i<=7;i++){
+      const day=base+i;const bp=bestPct(day);
+      const bt=el('<button class="dbtn'+(bp!==null?" done":"")+(day===td?" today":"")+'">'+(i===7?"復習":i)+'<small>'+(bp!==null?bp+"%":fmt(addDays(P.start,day-1)))+'</small></button>');
+      bt.onclick=()=>{ac();startLesson(day)};grid.appendChild(bt);
+    }
+    det.appendChild(grid);root.appendChild(det);
+  }
+  root.appendChild(el('<h2>設定</h2>'));
+  const set=el('<div class="card"><div class="sub">学習スタート日（Day 1 の日）。ずれたときは、ここを変えると今日のDayが変わります。</div><input type="date" id="startd" value="'+P.start+'"><div class="row"><button class="btn2" id="rst">記録をすべて消す</button></div></div>');
+  set.querySelector("#startd").onchange=e=>{if(e.target.value){P.start=e.target.value;save();renderLearn()}};
+  set.querySelector("#rst").onclick=()=>{if(confirm("学習の記録（点数・間違いの履歴・お気に入り）をすべて消します。よろしいですか？")){P={start:isoToday(),log:[],miss:{},favs:[]};save();renderLearn()}};
+  root.appendChild(set);
+}
+
+/* ===== レッスン ===== */
+function startLesson(day){
+  setView("quiz");
+  const root=$("#v-quiz");root.innerHTML="";
+  const {w,d}=dayInfo(day);const news=lessonNew(day);
+  root.appendChild(el('<h2>Day '+day+'　第'+w+'週「'+WEEK_INFO[w].t+'」'+(d===6?"（復習）":"")+'</h2>'));
+  if(d===0)root.appendChild(el('<div class="tip">💡 今週のポイント：'+WEEK_INFO[w].tip+'</div>'));
+  if(news.length){
+    root.appendChild(el('<div class="sub">① 今日の新しいフレーズ。▶で聞いて、🎤で声に出してみましょう。</div>'));
+    news.forEach(it=>root.appendChild(makeCard(it)));
+  }else{
+    root.appendChild(el('<div class="sub">今日は新しいフレーズはありません。これまでの復習クイズです。</div>'));
+  }
+  const go=el('<button class="big-btn">'+(news.length?"② クイズを始める":"クイズを始める")+'</button>');
+  go.onclick=()=>{ac();runQuiz({title:"Day "+day,day:day,qs:buildQuiz(day,P.miss)})};
+  root.appendChild(go);
+  const back=el('<button class="btn2">← 学習ホームへ</button>');back.onclick=()=>setView("learn");root.appendChild(back);
+  window.scrollTo(0,0);
+}
+function runQuiz(o){
+  setView("quiz");
+  const root=$("#v-quiz");const qs=o.qs;let i=0,score=0;const wrong=[];
+  if(!qs.length){root.innerHTML='<div class="empty">問題がありません</div>';return}
+  function showQ(){
+    root.innerHTML="";const q=qs[i];
+    root.appendChild(el('<div class="sub">'+o.title+'　'+(i+1)+' / '+qs.length+'</div>'));
+    root.appendChild(el('<div class="meter"><i style="width:'+Math.round(i/qs.length*100)+'%"></i></div>'));
+    let head;
+    if(q.type==="listen")head='<div class="q">🔊 聞こえたスペイン語の意味は？</div>';
+    else if(q.type==="read")head='<div class="q">「'+q.it.ja+'」をスペイン語で言うと？</div>';
+    else head='<div class="q">'+q.it.es+'</div><div class="qsub">この意味は？</div>';
+    root.appendChild(el('<div>'+head+'</div>'));
+    if(q.type!=="read"){const pb=el('<button class="btn2" style="margin-bottom:6px">🔊 '+(q.type==="listen"?"もう一度聞く":"聞く")+'</button>');pb.onclick=()=>speak(q.it.es);root.appendChild(pb)}
+    const box=el('<div></div>');const fb=el('<div></div>');let locked=false;
+    q.choices.forEach((c,idx)=>{
+      const b=el('<button class="choice"></button>');b.textContent=q.key==="ja"?c.ja:c.es;
+      b.onclick=()=>{
+        if(locked)return;locked=true;ac();
+        const ok=idx===q.ans;
+        [...box.children].forEach((x,k)=>{if(k===q.ans)x.classList.add("right")});
+        if(!ok)b.classList.add("wrong");
+        sfx(ok);
+        if(ok)score++;else wrong.push(q.it.es);
+        const m=P.miss;m[q.it.es]=ok?Math.max(0,(m[q.it.es]||0)-1):(m[q.it.es]||0)+1;
+        fb.innerHTML="";
+        fb.appendChild(el('<div class="fb '+(ok?"ok":"ng")+'">'+(ok?"⭕ 正解！":"❌ 不正解")+'</div>'));
+        fb.appendChild(el('<div class="card"><div class="ja">'+q.it.ja+'</div><div class="es">'+q.it.es+'</div><div class="kana">読み：'+q.it.kana+'</div></div>'));
+        const nx=el('<button class="big-btn">'+(i+1<qs.length?"次へ →":"結果を見る")+'</button>');
+        nx.onclick=()=>{ac();i++;if(i<qs.length)showQ();else finish()};
+        fb.appendChild(nx);
+        setTimeout(()=>speak(q.it.es),500);
+        fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+      };
+      box.appendChild(b);
+    });
+    root.appendChild(box);root.appendChild(fb);
+    if(q.type==="listen")setTimeout(()=>speak(q.it.es),200);
+    window.scrollTo(0,0);
+  }
+  function finish(){
+    P.log.push({day:o.day||0,title:o.title,ts:Date.now(),score:score,total:qs.length,wrong:wrong});save();
+    const pct=Math.round(score/qs.length*100);
+    if(pct>=80)fanfare();else sfx(pct>=50);
+    root.innerHTML="";
+    const msg=pct===100?"パーフェクト！🎉":pct>=80?"よくできました！":pct>=50?"あと少し。間違えたところを聞き直そう":"大丈夫、くり返せば覚えます";
+    root.appendChild(el('<div class="card" style="text-align:center"><div class="ja">'+o.title+' の結果</div><div class="es" style="font-size:34px">'+score+' / '+qs.length+'</div><div class="kana">'+pct+'%　'+msg+'</div></div>'));
+    if(wrong.length){
+      root.appendChild(el('<h2>間違えたフレーズ</h2>'));
+      [...new Set(wrong)].forEach(es=>{const it=ITEMS.find(x=>x.es===es);if(it)root.appendChild(makeCard(it))});
+      const rt=el('<button class="big-btn">間違えた問題だけやり直す</button>');
+      const wi=[...new Set(wrong)].map(es=>ITEMS.find(x=>x.es===es)).filter(Boolean);
+      rt.onclick=()=>{ac();const pool=ITEMS.filter(x=>x.w);runQuiz({title:o.title+"（やり直し）",day:0,qs:shuffle(wi.map((it,k)=>makeQ(it,["listen","read","rev"][k%3],pool)))})};
+      root.appendChild(rt);
+    }
+    if(o.day&&o.day<TOTAL_DAYS){const nd=el('<button class="btn2" style="margin:6px 6px 0 0">次の日（Day '+(o.day+1)+'）へ</button>');nd.onclick=()=>{ac();startLesson(o.day+1)};root.appendChild(nd)}
+    const hm=el('<button class="btn2" style="margin-top:6px">学習ホームへ</button>');hm.onclick=()=>setView("learn");root.appendChild(hm);
+    const lg=el('<button class="btn2" style="margin:6px 0 0 6px">ふりかえりを見る</button>');lg.onclick=()=>setView("log");root.appendChild(lg);
+    window.scrollTo(0,0);
+  }
+  showQ();
+}
+
+/* ===== ふりかえり ===== */
+function renderLog(){
+  const root=$("#v-log");root.innerHTML="";
+  const done=new Set(P.log.filter(l=>l.day>0).map(l=>l.day));
+  const avg=P.log.length?Math.round(P.log.reduce((s,l)=>s+l.score/l.total,0)/P.log.length*100):0;
+  root.appendChild(el('<div class="count"><div class="stat"><b>'+P.log.length+'</b><span>クイズ回数</span></div><div class="stat"><b>'+done.size+'</b><span>完了した日</span></div><div class="stat"><b>'+avg+'<small style="font-size:13px">%</small></b><span>平均点</span></div></div>'));
+  const weak=ITEMS.filter(i=>(P.miss[i.es]||0)>0).sort((a,b)=>P.miss[b.es]-P.miss[a.es]).slice(0,10);
+  root.appendChild(el('<h2>苦手フレーズ</h2>'));
+  if(weak.length){
+    weak.forEach(it=>root.appendChild(makeCard(it)));
+    const wb=el('<button class="big-btn">苦手クイズ（'+weak.length+'問）</button>');
+    wb.onclick=()=>{ac();runQuiz({title:"苦手クイズ",day:0,qs:buildMissQuiz(P.miss)})};root.appendChild(wb);
+  }else root.appendChild(el('<div class="empty">まだ間違えたフレーズはありません</div>'));
+  root.appendChild(el('<h2>日ごとの記録</h2>'));
+  if(!P.log.length)root.appendChild(el('<div class="empty">学習するとここに記録されます</div>'));
+  [...P.log].reverse().forEach(l=>{
+    const t=new Date(l.ts);const pct=Math.round(l.score/l.total*100);
+    const det=el('<details class="log"><summary>'+(t.getMonth()+1)+'/'+t.getDate()+' '+String(t.getHours()).padStart(2,"0")+':'+String(t.getMinutes()).padStart(2,"0")+'　'+l.title+'　<b>'+l.score+'/'+l.total+'</b>（'+pct+'%）</summary></details>');
+    if(l.wrong&&l.wrong.length){
+      [...new Set(l.wrong)].forEach(es=>{const it=ITEMS.find(x=>x.es===es);if(!it)return;
+        const r=el('<div class="wr"><b></b>　<span class="sub"></span> <button class="btn2" style="padding:4px 10px">▶</button></div>');
+        r.querySelector("b").textContent=it.es;r.querySelector("span").textContent=it.ja;r.querySelector("button").onclick=()=>speak(it.es);det.appendChild(r)});
+    }else det.appendChild(el('<div class="wr">全問正解！</div>'));
+    root.appendChild(det);
+  });
+}
+
+/* ===== 会話集 ===== */
+const cats=["★お気に入り",...DATA.map(d=>d.cat)];let cur="基本";
+const tabsEl=$("#tabs"),listEl=$("#list"),qEl=$("#q"),countEl=$("#count");
+cats.forEach(c=>{const b=document.createElement("button");b.className="tab";b.textContent=c;b.onclick=()=>{cur=c;qEl.value="";renderBook()};tabsEl.appendChild(b)});
+$("#slow").onclick=e=>{slow=!slow;e.currentTarget.setAttribute("aria-pressed",slow)};
+function renderBook(){
+  const q=qEl.value.trim().toLowerCase();
+  [...tabsEl.children].forEach((b,i)=>b.setAttribute("aria-pressed",cats[i]===cur&&!q));
+  let rows;
+  if(q)rows=ITEMS.filter(r=>(r.ja+r.es+r.kana).toLowerCase().includes(q));
+  else if(cur==="★お気に入り")rows=ITEMS.filter(r=>P.favs.includes(r.es));
+  else rows=ITEMS.filter(r=>r.cat===cur);
+  listEl.innerHTML="";countEl.textContent=rows.length+"件";
+  if(!rows.length){listEl.appendChild(el('<div class="empty">'+(cur==="★お気に入り"&&!q?"★を押すと、ここに集まります":"見つかりませんでした")+'</div>'));return}
+  rows.forEach(it=>listEl.appendChild(makeCard(it,()=>{if(cur==="★お気に入り"&&!q)renderBook()})));
+}
+qEl.addEventListener("input",renderBook);
+
+setView("learn");
+
 </script>
 </body>
 </html>
