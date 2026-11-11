@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="スペイン語">
+<meta name="mobile-web-app-capable" content="yes">
+<title>スペイン語 話せる帳</title>
+<style>
+  :root{
+    --bg:#fbf8f3; --card:#ffffff; --ink:#1f1f1f; --muted:#6a645c; --line:#e5ded3;
+    --red:#b3261e; --red-soft:#fbe9e7; --gold:#f1bf00; --gold-soft:#fff6dc; --blue:#1d5fa8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#17150f; --card:#221f18; --ink:#f2eee6; --muted:#a8a092; --line:#3a352b;
+      --red:#ff8a80; --red-soft:#3a1f1c; --gold:#f1bf00; --gold-soft:#332b10; --blue:#7fb2ee;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17150f; --card:#221f18; --ink:#f2eee6; --muted:#a8a092; --line:#3a352b;
+    --red:#ff8a80; --red-soft:#3a1f1c; --gold:#f1bf00; --gold-soft:#332b10; --blue:#7fb2ee;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{background:var(--bg)}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.5;
+    padding:0 16px calc(32px + env(safe-area-inset-bottom))}
+  header{padding:calc(14px + env(safe-area-inset-top)) 0 8px}
+  .flag{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-bottom:10px}
+  .flag i{flex:1;background:var(--red)} .flag i:nth-child(2){flex:2;background:var(--gold)}
+  h1{font-size:22px;margin:0 0 2px}
+  .sub{color:var(--muted);font-size:13px}
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;margin:0 -16px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--line)}
+  input[type=search]{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:7px 14px;font-size:14px}
+  .tab[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  .opts{display:flex;align-items:center;gap:10px;margin:10px 0 4px;font-size:13px;color:var(--muted)}
+  .opts button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:13px}
+  .opts button[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+  .ja{font-size:14px;color:var(--muted)}
+  .es{font-size:20px;font-weight:700;margin:2px 0}
+  .kana{font-size:15px;color:var(--red)}
+  .row{display:flex;gap:8px;margin-top:10px}
+  .row button{flex:1;font-size:15px;padding:11px 6px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .row .play{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .row .fav[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold)}
+  .res{margin-top:8px;font-size:14px;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+  .res:empty{display:none}
+  .res.ok{background:#e6f4ec;border-color:#1e7a46;color:#14532d}
+  .res.near{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+  .res.ng{background:var(--red-soft);border-color:var(--red);color:var(--ink)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .res.ok{background:#12301f;color:#bfe8cf}}
+  .row .mic{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
+  .row button{padding:11px 2px;font-size:14px}
+  .next{width:100%;margin:6px 0 0;font-size:16px;padding:12px;border-radius:10px;border:1px solid var(--red);background:var(--red);color:#fff;font-weight:700}
+  .empty{color:var(--muted);text-align:center;padding:30px 0}
+  .tip{background:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:10px 12px;font-size:13px;margin:12px 0}
+  #big{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
+  #big.on{display:flex}
+  #big .es{font-size:36px;margin:12px 0}
+  #big .ja{font-size:18px}
+  #big button{margin-top:22px;font-size:18px;padding:14px 30px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  #big .play{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .nov{display:none;color:var(--red);font-size:13px;margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="flag"><i></i><i></i><i></i></div>
+  <h1>スペイン語 話せる帳</h1>
+  <div class="sub">▶ を押すとスペイン語で読み上げます ／ 夫婦で使える旅行会話</div>
+</header>
+
+<div class="bar">
+  <input type="search" id="q" placeholder="さがす（例：トイレ、会計、ありがとう）" autocomplete="off">
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<div class="opts">
+  <button id="slow" aria-pressed="true">ゆっくり読む</button>
+  <button id="rand">🎲 ランダム練習</button>
+  <span id="count"></span>
+</div>
+<div class="nov" id="nov">この端末にスペイン語の音声が見つかりません。iPhoneの「設定 → アクセシビリティ → 読み上げコンテンツ → 声 → スペイン語」で音声を追加してください。</div>
+<div class="tip">📱 音が出ないときは、iPhone横のマナースイッチ（消音）をオフにして、音量を上げてください。「大きく見せる」で、お店の人に文字を見せることもできます。<br>🎤 「話す」を押してスペイン語で言うと、聞き取れた内容をお手本と比べて判定します（発音の点数ではなく「通じるか」の目安です）。初回はマイクの許可が必要です。</div>
+
+<div id="list"></div>
+
+<div id="big" role="dialog" aria-modal="true">
+  <div class="ja" id="bigja"></div>
+  <div class="es" id="bigeo"></div>
+  <div class="kana" id="bigkana"></div>
+  <button class="play" id="bigplay">▶ 聞かせる</button>
+  <button id="bigclose">閉じる</button>
+</div>
+
+<script>
+const DATA = [
+ {cat:"基本", items:[
+  ["こんにちは","Hola","オラ"],
+  ["おはよう（〜昼ごろ）","Buenos días","ブエノス ディアス"],
+  ["こんにちは（午後）","Buenas tardes","ブエナス タルデス"],
+  ["こんばんは","Buenas noches","ブエナス ノチェス"],
+  ["ありがとう","Gracias","グラシアス"],
+  ["どうもありがとう","Muchas gracias","ムチャス グラシアス"],
+  ["どういたしまして","De nada","デ ナダ"],
+  ["お願いします","Por favor","ポル ファボール"],
+  ["すみません（呼びかけ・ぶつかった時）","Perdón","ペルドン"],
+  ["ちょっと通ります","Con permiso","コン ペルミソ"],
+  ["はい／いいえ","Sí / No","シ ／ ノ"],
+  ["わかりません","No entiendo","ノ エンティエンド"],
+  ["英語を話せますか？","¿Habla inglés?","アブラ イングレス？"],
+  ["もっとゆっくりお願いします","Más despacio, por favor","マス デスパシオ ポル ファボール"],
+  ["もう一度お願いします","Otra vez, por favor","オトラ ベス ポル ファボール"],
+  ["さようなら／またね","Adiós / Hasta luego","アディオス ／ アスタ ルエゴ"],
+  ["日本人です","Soy japonés / Soy japonesa","ソイ ハポネス ／ ソイ ハポネサ"],
+  ["スペインは初めてです","Es mi primera vez en España","エス ミ プリメラ ベス エン エスパーニャ"]
+ ]},
+ {cat:"レストラン", items:[
+  ["2人です（席をお願いします）","Una mesa para dos, por favor","ウナ メサ パラ ドス ポル ファボール"],
+  ["メニューをお願いします","La carta, por favor","ラ カルタ ポル ファボール"],
+  ["おすすめは何ですか？","¿Qué recomienda?","ケ レコミエンダ"],
+  ["これをください","Quiero esto","キエロ エスト"],
+  ["これを2つください","Dos de esto, por favor","ドス デ エスト ポル ファボール"],
+  ["水（炭酸なし）をください","Agua sin gas, por favor","アグア シン ガス ポル ファボール"],
+  ["ビールをください","Una cerveza, por favor","ウナ セルベサ ポル ファボール"],
+  ["赤ワインをグラスで","Una copa de vino tinto","ウナ コパ デ ビノ ティント"],
+  ["白ワインをグラスで","Una copa de vino blanco","ウナ コパ デ ビノ ブランコ"],
+  ["コーヒー（ミルク入り）をください","Un café con leche, por favor","ウン カフェ コン レチェ ポル ファボール"],
+  ["とてもおいしいです","Está delicioso","エスタ デリシオソ"],
+  ["お会計をお願いします","La cuenta, por favor","ラ クエンタ ポル ファボール"],
+  ["カードで払えますか？","¿Puedo pagar con tarjeta?","プエド パガール コン タルヘタ"],
+  ["別々に払います","Por separado, por favor","ポル セパラード ポル ファボール"],
+  ["ナッツ類のアレルギーです","Soy alérgico a los frutos secos","ソイ アレルヒコ ア ロス フルートス セコス"],
+  ["（女性が言う）ナッツ類のアレルギーです","Soy alérgica a los frutos secos","ソイ アレルヒカ ア ロス フルートス セコス"],
+  ["トイレはどこですか？","¿Dónde están los aseos?","ドンデ エスタン ロス アセオス"]
+ ]},
+ {cat:"買い物", items:[
+  ["いくらですか？","¿Cuánto cuesta?","クアント クエスタ"],
+  ["見ているだけです","Solo estoy mirando","ソロ エストイ ミランド"],
+  ["これをください（買います）","Me lo llevo","メ ロ ジェボ"],
+  ["試着してもいいですか？","¿Puedo probármelo?","プエド プロバルメロ"],
+  ["もう少し大きいサイズはありますか？","¿Tiene una talla más grande?","ティエネ ウナ タジャ マス グランデ"],
+  ["もう少し小さいサイズはありますか？","¿Tiene una talla más pequeña?","ティエネ ウナ タジャ マス ペケーニャ"],
+  ["ちょっと高いです","Es un poco caro","エス ウン ポコ カロ"],
+  ["カードは使えますか？","¿Aceptan tarjeta?","アセプタン タルヘタ"],
+  ["袋をください","Una bolsa, por favor","ウナ ボルサ ポル ファボール"],
+  ["プレゼント用に包んでください","Para regalo, por favor","パラ レガロ ポル ファボール"]
+ ]},
+ {cat:"ホテル・移動", items:[
+  ["予約しています","Tengo una reserva","テンゴ ウナ レセルバ"],
+  ["荷物を預かってもらえますか？","¿Puede guardar mi equipaje?","プエデ グアルダル ミ エキパヘ"],
+  ["朝食は何時ですか？","¿A qué hora es el desayuno?","ア ケ オラ エス エル デサユノ"],
+  ["Wi-Fiのパスワードを教えてください","¿Cuál es la contraseña del wifi?","クアル エス ラ コントラセーニャ デル ウィフィ"],
+  ["部屋の鍵をお願いします","La llave de la habitación, por favor","ラ ジャベ デ ラ アビタシオン ポル ファボール"],
+  ["タクシーを呼んでください","¿Puede llamar un taxi?","プエデ ジャマール ウン タクシ"],
+  ["ここへお願いします（地図を見せて）","A este lugar, por favor","ア エステ ルガール ポル ファボール"],
+  ["駅はどこですか？","¿Dónde está la estación?","ドンデ エスタ ラ エスタシオン"],
+  ["どのくらいかかりますか？","¿Cuánto tarda?","クアント タルダ"],
+  ["ここで止めてください","Pare aquí, por favor","パレ アキ ポル ファボール"]
+ ]},
+ {cat:"観光", items:[
+  ["サグラダ・ファミリアはどこですか？","¿Dónde está la Sagrada Familia?","ドンデ エスタ ラ サグラダ ファミリア"],
+  ["何時に開きますか？","¿A qué hora abre?","ア ケ オラ アブレ"],
+  ["何時に閉まりますか？","¿A qué hora cierra?","ア ケ オラ シエラ"],
+  ["大人2枚ください","Dos entradas, por favor","ドス エントラーダス ポル ファボール"],
+  ["日本語の音声ガイドはありますか？","¿Hay audioguía en japonés?","アイ アウディオギア エン ハポネス"],
+  ["写真を撮ってもらえますか？","¿Puede sacarnos una foto?","プエデ サカルノス ウナ フォト"],
+  ["ここで写真を撮ってもいいですか？","¿Se pueden hacer fotos aquí?","セ プエデン アセール フォトス アキ"],
+  ["きれいですね！","¡Qué bonito!","ケ ボニート"],
+  ["集合は何時ですか？","¿A qué hora es el punto de encuentro?","ア ケ オラ エス エル プント デ エンクエントロ"]
+ ]},
+ {cat:"困った時", items:[
+  ["助けて！","¡Ayuda!","アユダ"],
+  ["医者が必要です","Necesito un médico","ネセシト ウン メディコ"],
+  ["ここが痛いです","Me duele aquí","メ ドゥエレ アキ"],
+  ["救急車を呼んでください","Llame a una ambulancia","ジャメ ア ウナ アンブランシア"],
+  ["警察を呼んでください","Llame a la policía","ジャメ ア ラ ポリシア"],
+  ["財布を盗まれました","Me han robado la cartera","メ アン ロバード ラ カルテラ"],
+  ["パスポートをなくしました","He perdido mi pasaporte","エ ペルディード ミ パサポルテ"],
+  ["道に迷いました","Estoy perdido","エストイ ペルディード"],
+  ["（女性が言う）道に迷いました","Estoy perdida","エストイ ペルディーダ"],
+  ["日本語を話せる人はいますか？","¿Hay alguien que hable japonés?","アイ アルギエン ケ アブレ ハポネス"],
+  ["薬局はどこですか？","¿Dónde hay una farmacia?","ドンデ アイ ウナ ファルマシア"]
+ ]},
+ {cat:"数字", items:[
+  ["1","uno","ウノ"],["2","dos","ドス"],["3","tres","トレス"],["4","cuatro","クアトロ"],["5","cinco","シンコ"],
+  ["6","seis","セイス"],["7","siete","シエテ"],["8","ocho","オチョ"],["9","nueve","ヌエベ"],["10","diez","ディエス"],
+  ["20","veinte","ベインテ"],["50","cincuenta","シンクエンタ"],["100","cien","シエン"]
+ ]}
+];
+
+const FAV_KEY="spain-favs-v1";
+let favs=new Set(); try{favs=new Set(JSON.parse(localStorage.getItem(FAV_KEY)||"[]"))}catch(e){}
+function saveFavs(){try{localStorage.setItem(FAV_KEY,JSON.stringify([...favs]))}catch(e){}}
+
+const tabsEl=document.getElementById("tabs"), listEl=document.getElementById("list"), qEl=document.getElementById("q"), countEl=document.getElementById("count");
+let cur="基本", slow=true;
+const cats=["★お気に入り",...DATA.map(d=>d.cat)];
+cats.forEach(c=>{const b=document.createElement("button");b.className="tab";b.textContent=c;b.onclick=()=>{cur=c;qEl.value="";render()};tabsEl.appendChild(b)});
+
+let voice=null;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  const vs=speechSynthesis.getVoices();
+  voice=vs.find(v=>v.lang==="es-ES")||vs.find(v=>v.lang&&v.lang.toLowerCase().startsWith("es"))||null;
+  document.getElementById("nov").style.display=(vs.length&&!voice)?"block":"none";
+}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function speak(text){
+  if(!("speechSynthesis" in window)){alert("この端末では読み上げが使えません");return}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="es-ES"; if(voice)u.voice=voice;
+  u.rate=slow?0.8:1.0;
+  speechSynthesis.speak(u);
+}
+document.getElementById("slow").onclick=e=>{slow=!slow;e.currentTarget.setAttribute("aria-pressed",slow)};
+
+const big=document.getElementById("big");
+function showBig(it){
+  document.getElementById("bigja").textContent=it[0];
+  document.getElementById("bigeo").textContent=it[1];
+  document.getElementById("bigkana").textContent=it[2];
+  document.getElementById("bigplay").onclick=()=>speak(it[1]);
+  big.classList.add("on");
+}
+document.getElementById("bigclose").onclick=()=>big.classList.remove("on");
+
+function all(){return DATA.flatMap(d=>d.items.map(i=>({cat:d.cat,it:i})))}
+function render(){
+  [...tabsEl.children].forEach((b,i)=>b.setAttribute("aria-pressed",cats[i]===cur&&!qEl.value));
+  const q=qEl.value.trim().toLowerCase();
+  let rows;
+  if(q){rows=all().filter(r=>(r.it[0]+r.it[1]+r.it[2]).toLowerCase().includes(q))}
+  else if(cur==="練習"){rows=practiceItem?[{cat:"",it:practiceItem}]:[]}
+  else if(cur==="★お気に入り"){rows=all().filter(r=>favs.has(r.it[1]))}
+  else{rows=all().filter(r=>r.cat===cur)}
+  listEl.innerHTML="";
+  countEl.textContent=rows.length+"件";
+  if(!rows.length){const d=document.createElement("div");d.className="empty";d.textContent=cur==="★お気に入り"&&!q?"★を押すと、ここに集まります":"見つかりませんでした";listEl.appendChild(d);return}
+  rows.forEach(({it})=>{
+    const c=document.createElement("div");c.className="card";
+    c.innerHTML='<div class="ja"></div><div class="es"></div><div class="kana"></div><div class="row"><button class="play">▶ 聞く</button><button class="mic">🎤 話す</button><button class="show">大きく</button><button class="fav" aria-label="お気に入り">★</button></div><div class="res"></div>';
+    c.querySelector(".ja").textContent=it[0];
+    const esEl=c.querySelector(".es"), kanaEl=c.querySelector(".kana");
+    const isP=cur==="練習"&&!q;
+    if(isP){esEl.textContent="？？？（スペイン語で言ってみよう）";kanaEl.textContent=""}
+    else{esEl.textContent=it[1];kanaEl.textContent="読み：" + it[2]}
+    c.querySelector(".mic").onclick=()=>listen(it[1],c.querySelector(".res"),()=>{esEl.textContent=it[1];kanaEl.textContent="読み：" + it[2]});
+    c.querySelector(".play").onclick=()=>speak(it[1]);
+    c.querySelector(".show").onclick=()=>showBig(it);
+    const f=c.querySelector(".fav");f.setAttribute("aria-pressed",favs.has(it[1]));
+    f.onclick=()=>{favs.has(it[1])?favs.delete(it[1]):favs.add(it[1]);saveFavs();f.setAttribute("aria-pressed",favs.has(it[1]));if(cur==="★お気に入り"&&!qEl.value)render()};
+    listEl.appendChild(c);
+  });
+  if(cur==="練習"&&!q){const n=document.createElement("button");n.className="next";n.textContent="🎲 次の問題";n.onclick=newPractice;listEl.appendChild(n)}
+}
+
+/* ---- 話して判定 ---- */
+let practiceItem=null;
+function newPractice(){const a=all();practiceItem=a[Math.floor(Math.random()*a.length)].it;cur="練習";qEl.value="";render()}
+document.getElementById("rand").onclick=newPractice;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+const NUMW={0:"cero",1:"uno",2:"dos",3:"tres",4:"cuatro",5:"cinco",6:"seis",7:"siete",8:"ocho",9:"nueve",10:"diez",20:"veinte",50:"cincuenta",100:"cien"};
+function norm(s){
+  s=s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[¿?¡!.,;:\/]/g," ");
+  s=s.replace(/\b\d+\b/g,m=>NUMW[+m]||m);
+  return s.replace(/\s+/g," ").trim();
+}
+function sim(a,b){
+  if(!a||!b)return 0;
+  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=1;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return 1-d[m][n]/Math.max(m,n);
+}
+function listen(target,res,done){
+  if(!SR){res.className="res ng";res.textContent="この端末（ブラウザ）では音声認識が使えません。iPhoneのSafariで開いてください。";return}
+  try{speechSynthesis.cancel()}catch(e){}
+  // 「/」で2通り書いてある文は、どちらを言っても正解にする
+  const targets=target.split(" / ").map(norm);
+  const r=new SR();r.lang="es-ES";r.interimResults=false;r.maxAlternatives=3;
+  res.className="res near";res.textContent="🎤 聞いています…スペイン語でどうぞ";
+  let got=false,failed=false;
+  r.onresult=e=>{
+    got=true;
+    const alts=[...e.results[0]].map(a=>a.transcript);
+    let best=0,heard=alts[0]||"";
+    alts.forEach(t=>targets.forEach(g=>{const s=sim(norm(t),g);if(s>best){best=s;heard=t}}));
+    const pct=Math.round(best*100);
+    if(best>=0.85){res.className="res ok";res.textContent="◎ 通じます！（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
+    else if(best>=0.6){res.className="res near";res.textContent="○ おしい！もう一度（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
+    else{res.className="res ng";res.textContent="△ もう一度、ゆっくり（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
+    if(done)done();
+  };
+  r.onerror=e=>{
+    failed=true;res.className="res ng";
+    res.textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")
+      ?"マイクが許可されていません。iPhoneの「設定 → Safari → マイク」で許可してください。"
+      :"うまく聞き取れませんでした。もう一度どうぞ。（"+e.error+"）";
+  };
+  r.onend=()=>{if(!got&&!failed){res.className="res ng";res.textContent="声が聞こえませんでした。もう一度どうぞ。"}};
+  try{r.start()}catch(err){res.className="res ng";res.textContent="マイクを開始できませんでした。"}
+}
+qEl.addEventListener("input",render);
+render();
+</script>
+</body>
+</html>
