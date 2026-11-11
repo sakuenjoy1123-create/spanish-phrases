@@ -287,12 +287,15 @@ function listen(target,res,done){
   try{speechSynthesis.cancel()}catch(e){}
   // 「/」で2通り書いてある文は、どちらを言っても正解にする
   const targets=target.split(" / ").map(norm);
-  const r=new SR();r.lang="es-ES";r.interimResults=false;r.maxAlternatives=3;
-  res.className="res near";res.textContent="🎤 聞いています…スペイン語でどうぞ";
-  let got=false,failed=false;
-  r.onresult=e=>{
-    got=true;
-    const alts=[...e.results[0]].map(a=>a.transcript);
+  if(window.__rec){try{window.__rec.abort()}catch(e){}window.__rec=null}
+  const r=new SR();window.__rec=r;r.lang="es-ES";r.continuous=false;r.interimResults=true;r.maxAlternatives=3;
+  res.className="res near";res.textContent="🎤 聞いています…スペイン語でどうぞ（もう一度「話す」を押すと中止）";
+  let got=false,failed=false,started=false,live="";
+  const timer=setTimeout(()=>{try{r.stop()}catch(e){}},9000);
+  r.onstart=()=>{started=true};
+  r.onaudiostart=()=>{res.textContent="🎤 マイクは動いています。スペイン語でどうぞ…"};
+  r.onspeechstart=()=>{res.textContent="🎤 声を検知しました…"};
+  const judge=alts=>{
     let best=0,heard=alts[0]||"";
     alts.forEach(t=>targets.forEach(g=>{const s=sim(norm(t),g);if(s>best){best=s;heard=t}}));
     const pct=Math.round(best*100);
@@ -301,14 +304,25 @@ function listen(target,res,done){
     else{res.className="res ng";res.textContent="△ もう一度、ゆっくり（一致 "+pct+"%）　聞き取り：「"+heard+"」"}
     if(done)done();
   };
+  r.onresult=e=>{
+    const first=e.results[e.results.length-1];
+    live=first[0].transcript;
+    if(!first.isFinal){res.className="res near";res.textContent="🎤 聞き取り中：「"+live+"」";return}
+    got=true;judge([...first].map(a=>a.transcript));
+  };
   r.onerror=e=>{
     failed=true;res.className="res ng";
-    res.textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")
-      ?"マイクが許可されていません。iPhoneの「設定 → Safari → マイク」で許可してください。"
-      :"うまく聞き取れませんでした。もう一度どうぞ。（"+e.error+"）";
+    const m={"not-allowed":"マイクが許可されていません。設定→Safari→マイク を確認してください。","service-not-allowed":"音声認識が許可されていません。設定→Siriと検索（またはApple IntelligenceとSiri）と、設定→一般→キーボード→音声入力 をオンにしてください。","no-speech":"声が聞こえませんでした。もう一度どうぞ。","audio-capture":"マイクを使えません。他のアプリがマイクを使っていないか確認してください。","language-not-supported":"スペイン語の音声認識に対応していません。設定→一般→キーボード→音声入力言語 に「スペイン語」を追加してください。","network":"通信エラーです。電波とWi-Fiを確認してください。"};
+    res.textContent=(m[e.error]||"うまく聞き取れませんでした。")+"（"+e.error+"）";
   };
-  r.onend=()=>{if(!got&&!failed){res.className="res ng";res.textContent="声が聞こえませんでした。もう一度どうぞ。"}};
-  try{r.start()}catch(err){res.className="res ng";res.textContent="マイクを開始できませんでした。"}
+  r.onend=()=>{
+    clearTimeout(timer);
+    if(!got&&!failed){
+      if(live){judge([live])}
+      else{res.className="res ng";res.textContent=started?"声が認識されませんでした（マイクは動いていました）。もう少し近づいて、ゆっくり言ってみてください。":"音声認識が始まりませんでした。設定→一般→キーボード→音声入力 と Siri がオンか確認してください。"}
+    }
+  };
+  try{r.start()}catch(err){res.className="res ng";res.textContent="マイクを開始できませんでした。（"+err.name+"）"}
 }
 qEl.addEventListener("input",render);
 render();
