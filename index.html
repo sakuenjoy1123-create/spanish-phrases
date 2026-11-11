@@ -281,6 +281,8 @@ function sim(a,b){
   return 1-d[m][n]/Math.max(m,n);
 }
 function listen(target,res,done){
+  const standalone=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
+  if(standalone){res.className="res ng";res.textContent="ホーム画面から開いたアプリ型では、iPhoneの仕様でマイク判定が使えません。Safariでこのページのアドレスを直接開いてください（読み上げ ▶ はこのままでOK）。";return}
   if(!SR){res.className="res ng";res.textContent="この端末（ブラウザ）では音声認識が使えません。iPhoneのSafariで開いてください。";return}
   try{speechSynthesis.cancel()}catch(e){}
   // 「/」で2通り書いてある文は、どちらを言っても正解にする
